@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import corsOptions from "./cors"
 import { ERROR_CODES, ExpressError } from "./middleware/error"
 import router from "./routes"
+import logger from "./error-logger"
 
 const app: Express = express()
 
@@ -24,6 +25,11 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
       .status(statusCode)
       .json({ status: statusCode, message: err.message })
   } else {
+    logger.error("Internal Server Error", {
+      message: err.message,
+      stack: err.stack,
+    })
+
     res.status(500).json({
       status: 500,
       message: "Internal Server Error !!!",
