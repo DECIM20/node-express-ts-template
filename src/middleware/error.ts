@@ -20,11 +20,20 @@ export const ERROR_CODES = {
 
 export class ExpressError extends Error {
   public readonly code
+  public readonly error: unknown
 
-  constructor(opts: { message?: string; code: keyof typeof ERROR_CODES }) {
+  constructor(opts: {
+    message?: string
+    error?: unknown
+    code: keyof typeof ERROR_CODES
+  }) {
     const message = opts.message ?? "Something went extremely wrong!!"
+    const error = opts.error ?? "Unknown"
+
     super(message)
+
     this.code = opts.code
     this.name = "ExpressError"
+    this.error = error
   }
 }
