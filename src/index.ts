@@ -9,7 +9,6 @@ dotenv.config()
 
 import corsOptions from "./cors"
 import { ERROR_CODES, ExpressError } from "./middleware/error"
-import router from "./routes"
 import logger from "./error-logger"
 import redisClient from "./middleware/redis"
 
@@ -37,6 +36,8 @@ app.use(
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`)
 })
+
+import router from "./routes"
 
 app.use("/api", router)
 
